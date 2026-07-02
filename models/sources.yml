@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: landing
+    schema: LANDING
+
+    tables:
+      - name: customers_raw
+      - name: orders_raw
+      - name: order_items_raw
+      - name: products_raw

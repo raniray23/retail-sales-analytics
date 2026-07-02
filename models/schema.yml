@@ -1,0 +1,61 @@
+version: 2
+models:
+  - name: stg_customers
+    description: Customer staging model    
+    columns:
+      - name: customerid
+        description: Unique customer identifier
+        tests:
+          - unique
+          - not_null
+  
+  - name: stg_orders
+    description: Orders staging model
+    columns:
+      - name: orderid
+        description: Unique identifier for each order
+        tests:
+          - unique
+          - not_null
+
+      - name: customerid
+        description: Customer who placed the order
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customerid     
+
+  - name: stg_products
+    description: Products staging model    
+    columns:
+      - name: productid
+        description: Unique identifier for each product
+        tests:
+          - unique
+          - not_null         
+                          
+  - name: stg_order_items
+    description: Order Items staging model
+    columns:
+      - name: orderitemid
+        description: Unique identifier for each order item
+        tests:
+          - not_null 
+
+      - name: orderid
+        description: Order associated with this item
+        tests:
+          - relationships: 
+              arguments:
+                to: ref('stg_orders')
+                field: orderid
+
+      - name: productid
+        description: Product associated with this order item
+        tests:
+         - relationships:
+             arguments: 
+               to: ref('stg_products')
+               field: productid    
+
